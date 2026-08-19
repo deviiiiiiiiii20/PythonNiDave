@@ -50,7 +50,8 @@ def login():
     if result:
         menu(username, result)
     else:
-        return False
+        print("Invalid username or password.")
+        login()
 
 def usernameExist(username):
     conn = get_connection()
@@ -126,24 +127,38 @@ def withdraw(username, result):
 
     conn = get_connection()
     cursor = conn.cursor()
-    sql = "update userinfo set balance = balance - %s where id = %s"
-    cursor.execute(sql, (withdrawBalance, user_id))
-    conn.commit()
+    cursor.execute("select balance from userinfo where id = %s", (user_id,))
+    balance = cursor.fetchone()
     cursor.close()
     conn.close()
 
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("select balance from userinfo where id = %s", (user_id,))
-    fBalance = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    print(" ")
-    print("=" * 50)
-    print("Withdraw successfully!")
-    print(f"Withdrawed : {withdrawBalance} ")
-    print(f"Updated balance: {fBalance[0]} ")
-    print("=" * 50)
+    withdrawBalance = float(withdrawBalance)
+    if withdrawBalance <= 0:
+        print("Withdraw amount must be greater than 0.")
+        return
+    if withdrawBalance > balance[0]:
+        print("Insufficient balance!")
+    else:
+        conn = get_connection()
+        cursor = conn.cursor()
+        sql = "update userinfo set balance = balance - %s where id = %s"
+        cursor.execute(sql, (withdrawBalance, user_id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("select balance from userinfo where id = %s", (user_id,))
+        fBalance = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        print(" ")
+        print("=" * 50)
+        print("Withdraw successfully!")
+        print(f"Withdrawed : {withdrawBalance} ")
+        print(f"Updated balance: {fBalance[0]} ")
+        print("=" * 50)
 
 
 def menu(username, result):

@@ -965,6 +965,7 @@ def logIn():
         playerName()
     else:
         print("Invalid username or password.")
+        logIn()
 
 def makeAccount():
     username = input("Please enter your username: ")
