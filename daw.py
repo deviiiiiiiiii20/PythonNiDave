@@ -1,26 +1,36 @@
-balance = 0
+
+""""
+def buildProfile(firstName, lastName, **otherInfo):
+    profile = {}
+    profile['firstName'] = firstName
+    profile['lastName'] = lastName
+
+    for key, value in otherInfo.items():
+        profile[key] = value
+    return profile
 
 
-def basta():
-    num1 = int(input("Enter first number: "))
-    num2 = int(input("Enter second number: "))
-    return num1, num2
+
+user1 = buildProfile('Allen', 'Ylagan',
+                     location = 'angles',
+                     age = 19,
+                     program = 'BSIT')
+
+print(user1)
+
+"""
+
+class studentProfile:
+    def __init__(self, firstName, lastName,):
+        self.firstName = firstName
+        self.lastName = lastName
+
+    @property
+    def fullName(self):
+        fullname =  "{} {}".format(self.firstName, self.lastName)
+        return fullname
 
 
-def engk(num1, num2):
-    sum = num1 + num2
-    dif = num1 - num2
-    print(f"Sum: {sum}, Difference: {dif}")
+user1 = studentProfile('Allen', 'Ylagan',)
 
-
-def nyak():
-    while True:
-        num1, num2 = basta()
-        engk(num1, num2)
-        choice = input("Do you want to continue? ")
-        if choice != "yes":
-            break
-
-
-if __name__ == "__main__":
-    nyak()
+print(user1.fullName)

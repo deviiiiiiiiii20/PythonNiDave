@@ -22,15 +22,6 @@ def login():
     else:
         print(f"Invalid username or password")
 
-
-
-
-
-
-
-
-
-
 def page2():
     clearWindow()
 
