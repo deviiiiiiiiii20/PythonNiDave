@@ -50,7 +50,6 @@ def hash_password(password):
 
 
 def make_tracking_number(number):
-    # 1 becomes AMS-00001
     return "AMS-" + str(number).zfill(5)
 
 
